@@ -5,13 +5,16 @@ import { useState } from "react";
 import Container from "@mui/material/Container";
 import { Paper } from "@mui/material";
 import { PostTask } from "../api/Task_API";
+import { useContext } from "react";
+import TaskContext from "../context/TaskContext";
 
-const AddTask = ({setRefreshTasks}) => {
+const AddTask = () => {
     const [showTextbox, setShowText] = useState(false);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState("");
 
+    const taskCont = useContext(TaskContext);
     const addTask = async () => {
         const task = {
             title: title,
@@ -20,7 +23,7 @@ const AddTask = ({setRefreshTasks}) => {
         };
         try {
             await PostTask(task);
-            setRefreshTasks(true)
+            taskCont.setState(true);
         } catch (error) {
             console.log(error.message);
         }

@@ -4,11 +4,10 @@ import ShowTasks from "../components/ShowTasks";
 
 const Home = () => {
 
-const [refreshTasks, setRefreshTasks] = useState(false)
   return (
     <>
-      <AddTask setRefreshTasks={setRefreshTasks}/>
-      <ShowTasks refreshTasks={refreshTasks}/>
+      <AddTask />
+      <ShowTasks />
     </>
   );
 };

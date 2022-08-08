@@ -18,6 +18,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
+import TaskState from "./context/TaskState";
 const drawerWidth = 240;
 const menuItems = [
     {
@@ -84,7 +85,7 @@ function App(props) {
                                 display: { xs: "none", sm: "block" },
                             }}
                         >
-                            MUI
+                            TASK
                         </Typography>
                         <Box sx={{ display: { xs: "none", sm: "block" } }}>
                             {menuItems.map((item) => (
@@ -116,10 +117,12 @@ function App(props) {
                     </Drawer>
                 </Box>
                 <Toolbar />
-                <div style={{marginTop: "1rem"}}>
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                    </Routes>
+                <div style={{ marginTop: "1rem" }}>
+                    <TaskState>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                        </Routes>
+                    </TaskState>
                 </div>
             </Container>
         </BrowserRouter>
