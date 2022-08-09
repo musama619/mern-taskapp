@@ -7,12 +7,13 @@ import { Paper } from "@mui/material";
 import { PostTask } from "../api/Task_API";
 import { useContext } from "react";
 import TaskContext from "../context/TaskContext";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 const AddTask = () => {
     const [showTextbox, setShowText] = useState(false);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [dueDate, setDueDate] = useState("");
+    const [dueDate, setDueDate] = useState(null);
 
     const taskCont = useContext(TaskContext);
     const addTask = async () => {
@@ -20,67 +21,87 @@ const AddTask = () => {
             title: title,
             description: description,
             dueDate: dueDate,
+            isComplete: false,
         };
+        console.log(task);
         try {
             await PostTask(task);
             taskCont.setState(true);
+            setShowText(false);
+            taskCont.setShowSnackbar(true);
+            taskCont.setSnackbarMsg("Task Added");
+
+            setTitle("");
+            setDescription("");
+            setDueDate(null);
         } catch (error) {
             console.log(error.message);
         }
     };
 
     return (
-        <Container>
-            <Button
-                variant="contained"
-                startIcon={<Add />}
-                style={{ display: showTextbox ? "none" : "inline-flex" }}
+        <>
+            <button
+                className=" hover:text-red-700 bg-white border-none cursor-pointer	font-bold py-2 px-4 rounded inline-flex items-center"
                 onClick={() => setShowText(!showTextbox)}
+                style={{ display: showTextbox ? "none" : "inline-flex" }}
             >
-                Add Task
-            </Button>
-            <Paper
-                elevation={2}
+                <Add />
+                <span>Add Task</span>
+            </button>
+            <div
+                className="outline outline-1 outline-gray-400 mt-4 p-8 rounded-lg"
                 style={{
-                    padding: 20,
-                    marginTop: "1rem",
-                    borderRadius: "16px",
                     display: showTextbox ? "block" : "none",
                 }}
             >
-                <TextField
-                    fullWidth
+                <input
                     id="title"
+                    value={title}
                     placeholder="e.g., Deploy to production, fix issue"
-                    variant="standard"
+                    className=" border-none outline-none min-w-full min-h-full text-lg font-bold"
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <TextField
-                    fullWidth
+                <input
                     id="description"
+                    value={description}
                     placeholder="Description"
-                    variant="standard"
-                    style={{
-                        marginTop: "1rem",
-                    }}
+                    className=" border-none outline-none min-w-full min-h-full mt-5 text-base"
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                <TextField
-                    id="datetime-local"
-                    label="Due Date"
-                    type="datetime-local"
-                    // defaultValue="2017-05-24T10:30"
-                    onChange={(e) => setDueDate(e.target.value)}
-                    style={{
-                        marginTop: "1rem",
+                <DateTimePicker
+                    renderInput={(props) => (
+                        <TextField
+                            {...props}
+                            style={{
+                                marginTop: "1rem",
+                                border: "none",
+                            }}
+                            variant="standard"
+                        />
+                    )}
+                    InputProps={{
+                        disableUnderline: true,
                     }}
-                    InputLabelProps={{
-                        shrink: true,
+                    disablePast={true}
+                    value={dueDate}
+                    onChange={(newValue) => {
+                        setDueDate(newValue);
                     }}
                 />
+                {/* <input
+                    type="datetime-local"
+                    id="birthdaytime"
+                    name="birthdaytime"
+                    className="border-none outline-none mt-5 text-base"
+                    onChange={(newValue) => {
+                        setDueDate(newValue.target.value);
+                    }}
+                /> */}
                 <Button
                     size="small"
                     variant="contained"
+                    className="bg-red-700"
                     style={{
                         float: "right",
                         marginTop: "2rem",
@@ -98,8 +119,8 @@ const AddTask = () => {
                 >
                     Cancel
                 </Button>
-            </Paper>
-        </Container>
+            </div>
+        </>
     );
 };
 

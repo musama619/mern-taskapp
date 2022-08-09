@@ -1,21 +1,27 @@
 const express = require("express");
-const { getTasks, getTask, createTask, updateTask, deletTask } = require("../controllers/taskController");
+const { getTasks, getTask, getCompletedTasks, createTask, updateTask, deletTask, getNotCompletedTasks } = require("../controllers/taskController");
 const router = express.Router();
 
 
-//GET all games
+//GET all tasks
 router.get("/", getTasks);
 
-//GET a single game
+//GET completed tasks
+router.get("/completed", getCompletedTasks);
+
+//GET not completed tasks
+router.get("/active", getNotCompletedTasks);
+
+//GET a single task
 router.get("/:id", getTask);
 
-//POST a new game
+//POST a new task
 router.post("/", createTask);
 
-//PUT a new game
+//PUT a new task
 router.patch("/:id", updateTask);
 
-//DELETE a game
+//DELETE a task
 router.delete("/:id", deletTask);
 
 module.exports = router;

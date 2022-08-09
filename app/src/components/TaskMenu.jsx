@@ -11,6 +11,9 @@ const TaskMenu = (props) => {
         try {
             await DeleteTask(props.id);
             taskCont.setState(true)
+            taskCont.setShowSnackbar(true)
+            taskCont.setSnackbarMsg("Task Deleted")
+
 
         } catch (error) {
             console.log(error);
@@ -23,6 +26,10 @@ const TaskMenu = (props) => {
 
         if (itemClicked == "Delete") {
             deleteTask();
+        }
+
+        if(itemClicked == "Edit"){
+            props.setIsEditing(true)
         }
     };
     return (
