@@ -8,6 +8,8 @@ import { styled, useTheme } from "@mui/material/styles";
 import { useState, useContext } from "react";
 import TaskContext from "../context/TaskContext";
 import SnackbarAlert from "./SnackbarAlert";
+import Signup from "../pages/Signup";
+import Login from "../pages/Login";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
     ({ theme, open }) => ({
@@ -42,12 +44,12 @@ function RoutesContent() {
     const taskCont = useContext(TaskContext);
     return (
         <>
-            {/* <Main open={taskCont.isSideBarOpen}>
-                <DrawerHeader /> */}
             <div style={{ marginTop: "1rem" }}>
                 <TaskState>
                     <SnackbarAlert />
                     <Routes>
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<Signup />} />
                         <Route path="/" element={<Tasks />} />
                         <Route
                             path="/completed-tasks"
@@ -56,7 +58,6 @@ function RoutesContent() {
                     </Routes>
                 </TaskState>
             </div>
-            {/* </Main> */}
         </>
     );
 }

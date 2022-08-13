@@ -20,7 +20,8 @@ import RoutesContent from "./RoutesContent";
 import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
 import AddTask from "@mui/icons-material/AddTask";
 import { Link } from "react-router-dom";
-
+import { Button } from "@mui/material";
+import { useLogout } from "../hooks/useLogout";
 const drawerWidth = 240;
 
 const menuItems = [
@@ -85,7 +86,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function PersistentDrawerLeft() {
     const theme = useTheme();
     const [open, setOpen] = React.useState(true);
-
+    const { logout } = useLogout();
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -97,27 +98,36 @@ export default function PersistentDrawerLeft() {
     return (
         <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            <AppBar
-                position="fixed"
-                open={open}
-                sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                className="bg-red-700"
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{ mr: 2, ...(open && { display: "none" }) }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        TASKER
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <Box sx={{ flexgrow: 1 }}>
+                <AppBar
+                    position="fixed"
+                    open={open}
+                    sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    className="bg-red-700"
+                >
+                    <Toolbar>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            sx={{ mr: 2, ...(open && { display: "none" }) }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" noWrap component="div">
+                            TASKER
+                        </Typography>
+                        <div style={{ flex: "1 1 auto" }}></div>
+                        <Button component={Link} to="/login" color="inherit">
+                            Login
+                        </Button>
+                        <Button color="inherit" onClick={() => logout()}>
+                            Logout
+                        </Button>
+                    </Toolbar>
+                </AppBar>
+            </Box>
             <div>
                 <Drawer
                     sx={{
