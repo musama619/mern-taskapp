@@ -1,7 +1,20 @@
 const express = require("express");
-const { getTasks, getTask, getCompletedTasks, createTask, updateTask, deletTask, getNotCompletedTasks } = require("../controllers/taskController");
+const {
+    getTasks,
+    getTask,
+    getCompletedTasks,
+    createTask,
+    updateTask,
+    deletTask,
+    getNotCompletedTasks,
+} = require("../controllers/taskController");
+
+const auth = require("../middleware/auth");
+
 const router = express.Router();
 
+//auth route access
+router.use(auth);
 
 //GET all tasks
 router.get("/", getTasks);

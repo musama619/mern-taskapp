@@ -6,11 +6,11 @@ export const GetAllTasks = async () => {
     return response.data;
 };
 export const GetAllCompletedTasks = async () => {
-    const response = await axios.get(DEFAULT_URL + TASK_URL + "/completed");
+    const response = await axios.get(DEFAULT_URL + TASK_URL + "completed");
     return response.data;
 };
 export const GetActiveTasks = async () => {
-    const response = await axios.get(DEFAULT_URL + TASK_URL + "/active");
+    const response = await axios.get(DEFAULT_URL + TASK_URL + "active");
     return response.data;
 };
 

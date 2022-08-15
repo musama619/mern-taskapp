@@ -28,6 +28,10 @@ const taskSchema = new Schema(
     color: {
       type: String,
     },
+    user_id: {
+      type: String,
+      require: true
+    }
   },
   { timestamps: true }
 );

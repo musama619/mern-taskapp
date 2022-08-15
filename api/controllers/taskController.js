@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 //get all tasks
 const getTasks = async (req, res) => {
-    const tasks = await Task.find({}).sort({ createdAt: -1 });
+    const user_id = req.user._id;
+    const tasks = await Task.find({ user_id }).sort({ createdAt: -1 });
     if (!tasks) {
         return res.status(404).json({ error: "No such task" });
     }
@@ -24,14 +25,18 @@ const getTask = async (req, res) => {
 };
 
 const getCompletedTasks = async (req, res) => {
-    const tasks = await Task.find({ isComplete: true });
+    const user_id = req.user._id;
+    console.log(req);
+    const tasks = await Task.find({ isComplete: true, user_id: user_id });
     if (!tasks) {
         return res.status(404).json({ error: "No such task" });
     }
     res.status(200).json(tasks);
 };
 const getNotCompletedTasks = async (req, res) => {
-    const tasks = await Task.find({ isComplete: false });
+    const user_id = req.user._id;
+
+    const tasks = await Task.find({ isComplete: false, user_id: user_id });
     if (!tasks) {
         return res.status(404).json({ error: "No such task" });
     }
@@ -50,6 +55,7 @@ const createTask = async (req, res) => {
         isReminder,
         color,
     } = req.body;
+    const user_id = req.user._id;
     try {
         const task = await Task.create({
             title,
@@ -60,6 +66,7 @@ const createTask = async (req, res) => {
             isDeleted,
             isReminder,
             color,
+            user_id,
         });
         if (!task) {
             return res.status(404).json({ error: "No such task" });

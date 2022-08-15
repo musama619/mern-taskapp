@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useContext } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -22,6 +22,8 @@ import AddTask from "@mui/icons-material/AddTask";
 import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useLogout } from "../hooks/useLogout";
+import { AuthContext } from "../context/AuthContext";
+
 const drawerWidth = 240;
 
 const menuItems = [
@@ -85,8 +87,10 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
     const theme = useTheme();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
     const { logout } = useLogout();
+    const { user } = useContext(AuthContext);
+
     const handleDrawerOpen = () => {
         setOpen(true);
     };
@@ -119,12 +123,19 @@ export default function PersistentDrawerLeft() {
                             TASKER
                         </Typography>
                         <div style={{ flex: "1 1 auto" }}></div>
-                        <Button component={Link} to="/login" color="inherit">
-                            Login
-                        </Button>
-                        <Button color="inherit" onClick={() => logout()}>
-                            Logout
-                        </Button>
+                        {user ? (
+                            <Button color="inherit" onClick={() => logout()}>
+                                Logout
+                            </Button>
+                        ) : (
+                            <Button
+                                component={Link}
+                                to="/login"
+                                color="inherit"
+                            >
+                                Login
+                            </Button>
+                        )}
                     </Toolbar>
                 </AppBar>
             </Box>
