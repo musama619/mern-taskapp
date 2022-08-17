@@ -41,7 +41,6 @@ const DrawerHeader = styled("div")(({ theme }) => ({
     justifyContent: "flex-end",
 }));
 function RoutesContent() {
-    const taskCont = useContext(TaskContext);
     return (
         <>
             <div style={{ marginTop: "1rem" }}>

@@ -105,7 +105,7 @@ export default function PersistentDrawerLeft() {
             <Box sx={{ flexgrow: 1 }}>
                 <AppBar
                     position="fixed"
-                    open={open}
+                    open={user ? open : false}
                     sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
                     className="bg-red-700"
                 >
@@ -140,6 +140,7 @@ export default function PersistentDrawerLeft() {
                 </AppBar>
             </Box>
             <div>
+            {!user ? <></> : 
                 <Drawer
                     sx={{
                         width: drawerWidth,
@@ -185,6 +186,7 @@ export default function PersistentDrawerLeft() {
                         ))}
                     </List>
                 </Drawer>
+            }
             </div>
 
             <Main open={open}>
