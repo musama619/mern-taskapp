@@ -5,12 +5,20 @@ export const GetAllTasks = async () => {
     const response = await axios.get(DEFAULT_URL + TASK_URL);
     return response.data;
 };
-export const GetAllCompletedTasks = async () => {
-    const response = await axios.get(DEFAULT_URL + TASK_URL + "completed");
+export const GetAllCompletedTasks = async (token) => {
+    const response = await axios.get(DEFAULT_URL + TASK_URL + "completed", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     return response.data;
 };
-export const GetActiveTasks = async () => {
-    const response = await axios.get(DEFAULT_URL + TASK_URL + "active");
+export const GetActiveTasks = async (token) => {
+    const response = await axios.get(DEFAULT_URL + TASK_URL + "active", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     return response.data;
 };
 
