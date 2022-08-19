@@ -10,7 +10,6 @@ const ShowTasks = (props) => {
 
     const { user } = useContext(AuthContext);
     const { setAuth } = useAuth();
-    console.log(user);
 
     useEffect(() => {
         async function fetchActiveTasks() {
@@ -37,7 +36,7 @@ const ShowTasks = (props) => {
     return (
         <>
             {tasks?.map((task, idx) => (
-                <Task key={task._id} task={task} index={idx} />
+                <Task key={task._id} task={task} index={idx} isComplete={props.isComplete} />
             ))}
         </>
     );

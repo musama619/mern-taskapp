@@ -22,7 +22,7 @@ import TaskMenu from "./TaskMenu";
 import { useState, useContext } from "react";
 import TaskContext from "../context/TaskContext";
 
-const Task = ({ task, index }) => {
+const Task = ({ task, index, isComplete }) => {
     const [checked, setChecked] = useState(task.isComplete ? true : false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -81,6 +81,7 @@ const Task = ({ task, index }) => {
             console.log(error);
         }
     };
+
     return (
         <div key={task._id}>
             <div style={{ marginTop: "1rem" }} className="shadow-sm ">
@@ -147,14 +148,15 @@ const Task = ({ task, index }) => {
                         </>
                     ) : (
                         <>
-                            <IconButton
-                                aria-label="settings"
-                                onClick={handleClick}
-                                style={{ float: "right" }}
-                            >
-                                <MoreVertIcon />
-                            </IconButton>
-
+                            {!isComplete && (
+                                <IconButton
+                                    aria-label="settings"
+                                    onClick={handleClick}
+                                    style={{ float: "right" }}
+                                >
+                                    <MoreVertIcon />
+                                </IconButton>
+                            )}
                             <Typography variant="h6">
                                 <input
                                     type="checkbox"
@@ -203,6 +205,7 @@ const Task = ({ task, index }) => {
                 </CardContent>
             </div>
             <Divider />
+
             <TaskMenu
                 id={task._id}
                 handleClose={handleClose}

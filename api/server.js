@@ -25,7 +25,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     app.listen(process.env.PORT, () => {
-      console.log("listening on 4000");
+      console.log("listening...");
     });
   })
   .catch((error) => {
